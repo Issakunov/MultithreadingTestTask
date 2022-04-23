@@ -2,6 +2,7 @@ package jam.workspace.service;
 
 public class FunctionServiceImpl implements FunctionService{
 
+
     @Override
     public String findFactorial(long input) {
         int i,fact=1;

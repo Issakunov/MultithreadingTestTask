@@ -10,6 +10,14 @@ import java.util.concurrent.*;
 
 public class Main {
 
+    /*
+    * 1) The main thread reads the input.txt file
+    * 2) Enter a number of threads you want in thread pool.
+    *    Threads in thread pool find the factorial of read number from input.txt
+    *    Factorial which is found by any thread will be put into ArrayBlockingQueue( which capacity is 10)
+    * 3) Thread "Writing Thread" writes the elements from ArrayBlockingQueue into output.txt
+    * */
+
     private static FunctionService functionService = new FunctionServiceImpl();
 
     public static void main(String[] args) throws IOException {
@@ -28,12 +36,12 @@ public class Main {
         /*
          * With the help of Consumer we write the factorial of numbers into output.txt file
          * */
-        BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(100);
+        BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(10);
         Consumer consumer = new Consumer(blockingQueue);
         Thread thread = new Thread(consumer, "Writing Thread");
         thread.start();
 
-        // Thread 1 reads numbers from input.txt
+        // Main thread reads numbers from input.txt
         String str = "";
         while ((str = br.readLine()) != null) {
             if (!str.isBlank()) {
